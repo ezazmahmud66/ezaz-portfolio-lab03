@@ -12,124 +12,671 @@
         Resume Builder | Ezaz Portfolio Builder
     </title>
 
+    <meta
+        name="description"
+        content="Create and manage your professional resume.">
+
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <link
         rel="stylesheet"
-        href="/resume-auth.css">
+        href="/resume-builder.css">
 </head>
 
 <body>
 
-    <header class="dashboard-header">
+    <!-- ================================
+         HEADER
+    ================================= -->
+
+    <header class="builder-header">
 
         <div class="header-container">
 
             <a
                 href="/"
-                class="brand">
+                class="brand"
+                aria-label="Go to portfolio home">
 
                 Ezaz<span>.</span>
 
             </a>
 
-            <button
-                type="button"
-                class="logout-btn"
-                id="logout-btn">
 
-                <i
-                    class="fa-solid fa-right-from-bracket"
-                    aria-hidden="true"></i>
+            <div class="header-user">
 
-                Logout
+                <div class="user-info">
 
-            </button>
+                    <i
+                        class="fa-solid fa-circle-user"
+                        aria-hidden="true">
+                    </i>
+
+                    <div>
+
+                        <span class="user-label">
+                            Logged in as
+                        </span>
+
+                        <strong id="user-name">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="logout-btn"
+                    id="logout-btn">
+
+                    <i
+                        class="fa-solid fa-right-from-bracket"
+                        aria-hidden="true">
+                    </i>
+
+                    Logout
+
+                </button>
+
+            </div>
 
         </div>
 
     </header>
 
 
-    <main class="dashboard-main">
+    <!-- ================================
+         MAIN
+    ================================= -->
 
-        <section class="welcome-card">
+    <main class="builder-main">
 
-            <div class="welcome-icon">
+        <div class="builder-container">
 
-                <i
-                    class="fa-solid fa-user-shield"
-                    aria-hidden="true"></i>
+            <!-- PAGE INTRO -->
 
-            </div>
+            <section class="builder-intro">
 
-            <p class="eyebrow">
-                AUTHENTICATED AREA
-            </p>
+                <p class="eyebrow">
+                    RESUME BUILDER
+                </p>
 
-            <h1>
-                Resume Builder
-            </h1>
+                <h1>
+                    Create Your Professional Resume
+                </h1>
 
-            <p
-                class="welcome-message"
-                id="welcome-message">
+                <p>
+                    Complete the form below with your
+                    professional information. You will be able
+                    to save your progress, return later, edit
+                    your details, and generate your resume.
+                </p>
 
-                Loading your account...
+            </section>
 
-            </p>
 
-            <div class="success-box">
+            <!-- STATUS MESSAGE -->
 
-                <i
-                    class="fa-solid fa-circle-check"
-                    aria-hidden="true"></i>
-
-                <div>
-
-                    <h2>
-                        Access Granted
-                    </h2>
-
-                    <p>
-                        You successfully logged in and accessed
-                        a protected page using session authentication.
-                    </p>
-
-                </div>
-
+            <div
+                class="builder-alert"
+                id="builder-alert"
+                role="alert"
+                aria-live="polite">
             </div>
 
 
-            <div class="next-phase">
+            <!-- ================================
+                 RESUME FORM
+            ================================= -->
 
-                <i
-                    class="fa-solid fa-file-lines"
-                    aria-hidden="true"></i>
+            <form
+                id="resume-form"
+                novalidate>
 
-                <div>
 
-                    <h2>
-                        Resume Form Coming Next
-                    </h2>
+                <!-- ================================
+                     PERSONAL INFORMATION
+                ================================= -->
 
-                    <p>
-                        In Phase 06, this protected area will
-                        contain the complete resume builder form.
-                    </p>
+                <section class="form-section">
 
-                </div>
+                    <div class="section-heading">
 
-            </div>
+                        <div class="section-icon">
 
-        </section>
+                            <i
+                                class="fa-solid fa-user"
+                                aria-hidden="true">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="section-number">
+                                SECTION 01
+                            </p>
+
+                            <h2>
+                                Personal Information
+                            </h2>
+
+                            <p>
+                                Add your basic contact details.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid two-column">
+
+                        <!-- FULL NAME -->
+
+                        <div class="form-group">
+
+                            <label for="full-name">
+                                Full Name
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="full-name"
+                                name="fullName"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+                            <label for="resume-email">
+                                Email Address
+                                <span>*</span>
+                            </label>
+
+                            <input
+                                type="email"
+                                id="resume-email"
+                                name="email"
+                                placeholder="example@email.com"
+                                autocomplete="email"
+                                required>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="form-group">
+
+                            <label for="phone">
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                placeholder="+880 1XXXXXXXXX"
+                                autocomplete="tel">
+
+                        </div>
+
+
+                        <!-- ADDRESS -->
+
+                        <div class="form-group">
+
+                            <label for="address">
+                                Location / Address
+                            </label>
+
+                            <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                placeholder="Dhaka, Bangladesh"
+                                autocomplete="address-level2">
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================================
+                     CAREER OBJECTIVE
+                ================================= -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+
+                            <i
+                                class="fa-solid fa-bullseye"
+                                aria-hidden="true">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="section-number">
+                                SECTION 02
+                            </p>
+
+                            <h2>
+                                Career Objective
+                            </h2>
+
+                            <p>
+                                Write a short professional summary
+                                or career objective.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="objective">
+                            Career Objective
+                        </label>
+
+                        <textarea
+                            id="objective"
+                            name="objective"
+                            rows="6"
+                            placeholder="Write your career objective here..."></textarea>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================================
+                     EDUCATION
+                ================================= -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+
+                            <i
+                                class="fa-solid fa-graduation-cap"
+                                aria-hidden="true">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="section-number">
+                                SECTION 03
+                            </p>
+
+                            <h2>
+                                Education
+                            </h2>
+
+                            <p>
+                                Add your educational background.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="education">
+                            Education Details
+                        </label>
+
+                        <textarea
+                            id="education"
+                            name="education"
+                            rows="7"
+                            placeholder="Example:
+
+Bachelor of Science in Computer Science and Engineering
+East West University
+Expected Graduation: 2027"></textarea>
+
+                        <small class="field-help">
+                            You may add multiple educational
+                            qualifications on separate lines.
+                        </small>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================================
+                     SKILLS
+                ================================= -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+
+                            <i
+                                class="fa-solid fa-code"
+                                aria-hidden="true">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="section-number">
+                                SECTION 04
+                            </p>
+
+                            <h2>
+                                Skills
+                            </h2>
+
+                            <p>
+                                Add your technical and professional
+                                skills.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="skills">
+                            Skills
+                        </label>
+
+                        <textarea
+                            id="skills"
+                            name="skills"
+                            rows="6"
+                            placeholder="Example:
+Python, SQL, Excel, Data Analysis, Git, JavaScript"></textarea>
+
+                        <small class="field-help">
+                            Separate skills using commas or new lines.
+                        </small>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================================
+                     EXPERIENCE
+                ================================= -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+
+                            <i
+                                class="fa-solid fa-briefcase"
+                                aria-hidden="true">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="section-number">
+                                SECTION 05
+                            </p>
+
+                            <h2>
+                                Experience
+                            </h2>
+
+                            <p>
+                                Add internship, job, volunteer,
+                                or relevant professional experience.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="experience">
+                            Experience Details
+                        </label>
+
+                        <textarea
+                            id="experience"
+                            name="experience"
+                            rows="8"
+                            placeholder="Example:
+
+Data Analyst Intern
+Company Name
+Jan 2026 - Apr 2026
+
+- Analyzed business data
+- Prepared reports
+- Created visualizations"></textarea>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================================
+                     PROJECTS
+                ================================= -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+
+                            <i
+                                class="fa-solid fa-diagram-project"
+                                aria-hidden="true">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="section-number">
+                                SECTION 06
+                            </p>
+
+                            <h2>
+                                Projects
+                            </h2>
+
+                            <p>
+                                Add your academic, personal,
+                                or professional projects.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="projects">
+                            Project Details
+                        </label>
+
+                        <textarea
+                            id="projects"
+                            name="projects"
+                            rows="8"
+                            placeholder="Example:
+
+Telecom Churn Decision Framework
+
+- Built machine learning models
+- Improved recall through threshold optimization
+- Used Python, XGBoost and SHAP"></textarea>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================================
+                     CERTIFICATIONS
+                ================================= -->
+
+                <section class="form-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-icon">
+
+                            <i
+                                class="fa-solid fa-certificate"
+                                aria-hidden="true">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <p class="section-number">
+                                SECTION 07
+                            </p>
+
+                            <h2>
+                                Certifications
+                            </h2>
+
+                            <p>
+                                Add relevant courses and
+                                professional certifications.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="certifications">
+                            Certification Details
+                        </label>
+
+                        <textarea
+                            id="certifications"
+                            name="certifications"
+                            rows="7"
+                            placeholder="Example:
+
+Introduction to SQL - DataCamp
+Python for Everybody - University of Michigan
+Advanced Excel - Grameenphone Academy"></textarea>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================================
+                     ACTION BUTTONS
+                ================================= -->
+
+                <section class="form-actions">
+
+                    <div class="action-info">
+
+                        <i
+                            class="fa-solid fa-circle-info"
+                            aria-hidden="true">
+                        </i>
+
+                        <p>
+                            Save your progress before leaving.
+                            Database saving will be connected
+                            in the next phase.
+                        </p>
+
+                    </div>
+
+
+                    <div class="action-buttons">
+
+                        <button
+                            type="button"
+                            class="btn btn-save"
+                            id="save-btn">
+
+                            <i
+                                class="fa-solid fa-floppy-disk"
+                                aria-hidden="true">
+                            </i>
+
+                            Save Progress
+
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-generate"
+                            id="generate-btn">
+
+                            <i
+                                class="fa-solid fa-file-lines"
+                                aria-hidden="true">
+                            </i>
+
+                            Generate Resume
+
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </form>
+
+        </div>
 
     </main>
 
 
-    <script src="/resume-auth.js"></script>
+    <script src="/resume-builder.js"></script>
 
 </body>
 

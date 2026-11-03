@@ -1,20 +1,54 @@
-const express = require("express");
-const path = require("path");
-const bcrypt = require("bcryptjs");
+require("dotenv").config();
+
+const express =
+    require("express");
+
+const path =
+    require("path");
+
+const bcrypt =
+    require("bcryptjs");
+
+const session =
+    require("express-session");
+
 
 // Initialize database
-const db = require("./database/db");
+const db =
+    require("./database/db");
 
-const app = express();
 
-const PORT = process.env.PORT || 3000;
+const app =
+    express();
+
+
+const PORT =
+    process.env.PORT || 3000;
+
+
+// ================================
+// Check Session Secret
+// ================================
+
+if (!process.env.SESSION_SECRET) {
+
+    console.error(
+        "SESSION_SECRET is missing from .env"
+    );
+
+    process.exit(1);
+
+}
 
 
 // ================================
 // Middleware
 // ================================
 
-app.use(express.json());
+app.use(
+    express.json()
+);
+
 
 app.use(
     express.urlencoded({
@@ -23,7 +57,49 @@ app.use(
 );
 
 
-// Serve frontend files
+// ================================
+// Session Middleware
+// ================================
+
+app.use(
+    session({
+
+        name:
+            "lab03.sid",
+
+        secret:
+            process.env.SESSION_SECRET,
+
+        resave:
+            false,
+
+        saveUninitialized:
+            false,
+
+        cookie: {
+
+            httpOnly:
+                true,
+
+            secure:
+                false,
+
+            sameSite:
+                "lax",
+
+            maxAge:
+                60 * 60 * 1000
+
+        }
+
+    })
+);
+
+
+// ================================
+// Static Files
+// ================================
+
 app.use(
     express.static(
         path.join(
@@ -35,54 +111,123 @@ app.use(
 
 
 // ================================
+// Authentication Middleware
+// ================================
+
+function requireAuth(
+    req,
+    res,
+    next
+) {
+
+    if (
+        req.session &&
+        req.session.user
+    ) {
+
+        return next();
+
+    }
+
+
+    return res.redirect(
+        "/login"
+    );
+
+}
+
+
+// ================================
 // Home Route
 // ================================
 
-app.get("/", (req, res) => {
+app.get(
+    "/",
+    (req, res) => {
 
-    res.sendFile(
-        path.join(
-            __dirname,
-            "public",
-            "index.html"
-        )
-    );
+        res.sendFile(
+            path.join(
+                __dirname,
+                "public",
+                "index.html"
+            )
+        );
 
-});
+    }
+);
 
 
 // ================================
 // Registration Page
 // ================================
 
-app.get("/register", (req, res) => {
+app.get(
+    "/register",
+    (req, res) => {
 
-    res.sendFile(
-        path.join(
-            __dirname,
-            "public",
-            "register.html"
-        )
-    );
+        res.sendFile(
+            path.join(
+                __dirname,
+                "public",
+                "register.html"
+            )
+        );
 
-});
+    }
+);
 
 
 // ================================
 // Login Page
 // ================================
 
-app.get("/login", (req, res) => {
+app.get(
+    "/login",
+    (req, res) => {
 
-    res.sendFile(
-        path.join(
-            __dirname,
-            "public",
-            "login.html"
-        )
-    );
+        if (
+            req.session &&
+            req.session.user
+        ) {
 
-});
+            return res.redirect(
+                "/resume"
+            );
+
+        }
+
+
+        res.sendFile(
+            path.join(
+                __dirname,
+                "public",
+                "login.html"
+            )
+        );
+
+    }
+);
+
+
+// ================================
+// Protected Resume Page
+// ================================
+
+app.get(
+    "/resume",
+    requireAuth,
+    (req, res) => {
+
+        res.sendFile(
+            path.join(
+                __dirname,
+                "views",
+                "resume.html"
+            )
+        );
+
+    }
+);
 
 
 // ================================
@@ -110,11 +255,17 @@ app.post(
                 !confirmPassword
             ) {
 
-                return res.status(400).json({
-                    success: false,
-                    message:
-                        "All fields are required."
-                });
+                return res
+                    .status(400)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "All fields are required."
+
+                    });
 
             }
 
@@ -122,19 +273,28 @@ app.post(
             name =
                 name.trim();
 
+
             email =
                 email
                     .trim()
                     .toLowerCase();
 
 
-            if (name.length < 2) {
+            if (
+                name.length < 2
+            ) {
 
-                return res.status(400).json({
-                    success: false,
-                    message:
-                        "Please enter a valid name."
-                });
+                return res
+                    .status(400)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Please enter a valid name."
+
+                    });
 
             }
 
@@ -143,24 +303,41 @@ app.post(
                 /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
-            if (!emailPattern.test(email)) {
+            if (
+                !emailPattern
+                    .test(email)
+            ) {
 
-                return res.status(400).json({
-                    success: false,
-                    message:
-                        "Please enter a valid email address."
-                });
+                return res
+                    .status(400)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Please enter a valid email address."
+
+                    });
 
             }
 
 
-            if (password.length < 6) {
+            if (
+                password.length < 6
+            ) {
 
-                return res.status(400).json({
-                    success: false,
-                    message:
-                        "Password must contain at least 6 characters."
-                });
+                return res
+                    .status(400)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Password must contain at least 6 characters."
+
+                    });
 
             }
 
@@ -170,11 +347,17 @@ app.post(
                 confirmPassword
             ) {
 
-                return res.status(400).json({
-                    success: false,
-                    message:
-                        "Passwords do not match."
-                });
+                return res
+                    .status(400)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Passwords do not match."
+
+                    });
 
             }
 
@@ -190,11 +373,17 @@ app.post(
 
             if (existingUser) {
 
-                return res.status(409).json({
-                    success: false,
-                    message:
-                        "An account already exists with this email address."
-                });
+                return res
+                    .status(409)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "An account already exists with this email address."
+
+                    });
 
             }
 
@@ -230,11 +419,17 @@ app.post(
             );
 
 
-            return res.status(201).json({
-                success: true,
-                message:
-                    "Registration successful. Your account has been created."
-            });
+            return res
+                .status(201)
+                .json({
+
+                    success:
+                        true,
+
+                    message:
+                        "Registration successful. Your account has been created."
+
+                });
 
 
         } catch (error) {
@@ -250,20 +445,32 @@ app.post(
                 "SQLITE_CONSTRAINT_UNIQUE"
             ) {
 
-                return res.status(409).json({
-                    success: false,
-                    message:
-                        "An account already exists with this email address."
-                });
+                return res
+                    .status(409)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "An account already exists with this email address."
+
+                    });
 
             }
 
 
-            return res.status(500).json({
-                success: false,
-                message:
-                    "Something went wrong while creating your account."
-            });
+            return res
+                .status(500)
+                .json({
+
+                    success:
+                        false,
+
+                    message:
+                        "Something went wrong while creating your account."
+
+                });
 
         }
 
@@ -287,18 +494,22 @@ app.post(
             } = req.body;
 
 
-            // Required fields
-
             if (
                 !email ||
                 !password
             ) {
 
-                return res.status(400).json({
-                    success: false,
-                    message:
-                        "Email and password are required."
-                });
+                return res
+                    .status(400)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Email and password are required."
+
+                    });
 
             }
 
@@ -308,8 +519,6 @@ app.post(
                     .trim()
                     .toLowerCase();
 
-
-            // Find user by email
 
             const user =
                 db.prepare(`
@@ -324,22 +533,22 @@ app.post(
                 .get(email);
 
 
-            // Do not reveal whether
-            // email or password was wrong
-
             if (!user) {
 
-                return res.status(401).json({
-                    success: false,
-                    message:
-                        "Incorrect email or password."
-                });
+                return res
+                    .status(401)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Incorrect email or password."
+
+                    });
 
             }
 
-
-            // Compare entered password
-            // with hashed password
 
             const passwordMatches =
                 await bcrypt.compare(
@@ -350,34 +559,131 @@ app.post(
 
             if (!passwordMatches) {
 
-                return res.status(401).json({
-                    success: false,
-                    message:
-                        "Incorrect email or password."
-                });
+                return res
+                    .status(401)
+                    .json({
+
+                        success:
+                            false,
+
+                        message:
+                            "Incorrect email or password."
+
+                    });
 
             }
 
 
-            console.log(
-                `Login successful for user ID: ${user.id}`
-            );
+            // Regenerate session after login
+            // to get a fresh session ID.
+
+            req.session.regenerate(
+                function (
+                    sessionError
+                ) {
+
+                    if (sessionError) {
+
+                        console.error(
+                            "Session regeneration error:",
+                            sessionError
+                        );
 
 
-            return res.status(200).json({
+                        return res
+                            .status(500)
+                            .json({
 
-                success: true,
+                                success:
+                                    false,
 
-                message:
-                    "Login successful.",
+                                message:
+                                    "Unable to create login session."
 
-                user: {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email
+                            });
+
+                    }
+
+
+                    req.session.user = {
+
+                        id:
+                            user.id,
+
+                        name:
+                            user.name,
+
+                        email:
+                            user.email
+
+                    };
+
+
+                    req.session.save(
+                        function (
+                            saveError
+                        ) {
+
+                            if (
+                                saveError
+                            ) {
+
+                                console.error(
+                                    "Session save error:",
+                                    saveError
+                                );
+
+
+                                return res
+                                    .status(500)
+                                    .json({
+
+                                        success:
+                                            false,
+
+                                        message:
+                                            "Unable to save login session."
+
+                                    });
+
+                            }
+
+
+                            console.log(
+                                `Login successful for user ID: ${user.id}`
+                            );
+
+
+                            return res
+                                .status(200)
+                                .json({
+
+                                    success:
+                                        true,
+
+                                    message:
+                                        "Login successful.",
+
+                                    user: {
+
+                                        id:
+                                            user.id,
+
+                                        name:
+                                            user.name,
+
+                                        email:
+                                            user.email
+
+                                    }
+
+                                });
+
+                        }
+                    );
+
                 }
-
-            });
+            );
 
 
         } catch (error) {
@@ -388,13 +694,140 @@ app.post(
             );
 
 
-            return res.status(500).json({
-                success: false,
+            return res
+                .status(500)
+                .json({
+
+                    success:
+                        false,
+
+                    message:
+                        "Something went wrong while logging in."
+
+                });
+
+        }
+
+    }
+);
+
+
+// ================================
+// Session Check API
+// ================================
+
+app.get(
+    "/api/session",
+    (req, res) => {
+
+        if (
+            !req.session ||
+            !req.session.user
+        ) {
+
+            return res
+                .status(401)
+                .json({
+
+                    success:
+                        false,
+
+                    authenticated:
+                        false,
+
+                    message:
+                        "You are not logged in."
+
+                });
+
+        }
+
+
+        return res.json({
+
+            success:
+                true,
+
+            authenticated:
+                true,
+
+            user:
+                req.session.user
+
+        });
+
+    }
+);
+
+
+// ================================
+// Logout API
+// ================================
+
+app.post(
+    "/api/logout",
+    (req, res) => {
+
+        if (
+            !req.session
+        ) {
+
+            return res.json({
+
+                success:
+                    true,
+
                 message:
-                    "Something went wrong while logging in."
+                    "Logout successful."
+
             });
 
         }
+
+
+        req.session.destroy(
+            function (error) {
+
+                if (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+
+                    return res
+                        .status(500)
+                        .json({
+
+                            success:
+                                false,
+
+                            message:
+                                "Unable to logout."
+
+                        });
+
+                }
+
+
+                res.clearCookie(
+                    "lab03.sid"
+                );
+
+
+                return res.json({
+
+                    success:
+                        true,
+
+                    message:
+                        "Logout successful."
+
+                });
+
+            }
+        );
 
     }
 );
@@ -404,15 +837,22 @@ app.post(
 // Health Check
 // ================================
 
-app.get("/health", (req, res) => {
+app.get(
+    "/health",
+    (req, res) => {
 
-    res.json({
-        success: true,
-        message:
-            "Lab 03 server is running successfully."
-    });
+        res.json({
 
-});
+            success:
+                true,
+
+            message:
+                "Lab 03 server is running successfully."
+
+        });
+
+    }
+);
 
 
 // ================================
@@ -447,7 +887,8 @@ app.get(
 
             res.json({
 
-                success: true,
+                success:
+                    true,
 
                 database:
                     "SQLite connected successfully.",
@@ -473,11 +914,17 @@ app.get(
             );
 
 
-            res.status(500).json({
-                success: false,
-                message:
-                    "Database connection failed."
-            });
+            res
+                .status(500)
+                .json({
+
+                    success:
+                        false,
+
+                    message:
+                        "Database connection failed."
+
+                });
 
         }
 
@@ -489,15 +936,23 @@ app.get(
 // 404 Handler
 // ================================
 
-app.use((req, res) => {
+app.use(
+    (req, res) => {
 
-    res.status(404).json({
-        success: false,
-        message:
-            "Page not found."
-    });
+        res
+            .status(404)
+            .json({
 
-});
+                success:
+                    false,
+
+                message:
+                    "Page not found."
+
+            });
+
+    }
+);
 
 
 // ================================
@@ -548,6 +1003,26 @@ app.listen(
 
         console.log(
             ` http://localhost:${PORT}/login`
+        );
+
+        console.log("");
+
+        console.log(
+            ` Protected Resume:`
+        );
+
+        console.log(
+            ` http://localhost:${PORT}/resume`
+        );
+
+        console.log("");
+
+        console.log(
+            ` Session API:`
+        );
+
+        console.log(
+            ` http://localhost:${PORT}/api/session`
         );
 
         console.log("");

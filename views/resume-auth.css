@@ -1,0 +1,313 @@
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+
+    --dark: #0f172a;
+    --text: #334155;
+    --muted: #64748b;
+
+    --white: #ffffff;
+    --background: #f8fafc;
+    --border: #e2e8f0;
+
+    --success: #15803d;
+    --success-bg: #f0fdf4;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background: var(--background);
+    color: var(--text);
+}
+
+
+button {
+    font: inherit;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.dashboard-header {
+    background: var(--white);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+
+.header-container {
+    width: min(
+        1100px,
+        calc(100% - 40px)
+    );
+
+    min-height: 72px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.brand {
+    font-size: 1.6rem;
+    font-weight: 800;
+
+    color: var(--dark);
+
+    text-decoration: none;
+}
+
+
+.brand span {
+    color: var(--primary);
+}
+
+
+.logout-btn {
+    min-height: 44px;
+
+    padding: 0 18px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: var(--dark);
+    color: var(--white);
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.logout-btn:hover {
+    background: #1e293b;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+.dashboard-main {
+    min-height:
+        calc(100vh - 72px);
+
+    padding: 60px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.welcome-card {
+    width: min(700px, 100%);
+
+    padding: 48px;
+
+    background: var(--white);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(15, 23, 42, 0.08);
+
+    text-align: center;
+}
+
+
+.welcome-icon {
+    width: 72px;
+    height: 72px;
+
+    margin:
+        0 auto 24px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 20px;
+
+    background: #eff6ff;
+
+    color: var(--primary);
+
+    font-size: 1.8rem;
+}
+
+
+.eyebrow {
+    margin-bottom: 10px;
+
+    color: var(--primary);
+
+    font-size: 0.78rem;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+
+.welcome-card h1 {
+    color: var(--dark);
+
+    font-size:
+        clamp(2rem, 5vw, 3rem);
+}
+
+
+.welcome-message {
+    margin-top: 14px;
+
+    color: var(--muted);
+
+    line-height: 1.7;
+}
+
+
+.success-box,
+.next-phase {
+    margin-top: 30px;
+
+    padding: 22px;
+
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    border-radius: 14px;
+
+    text-align: left;
+}
+
+
+.success-box {
+    background: var(--success-bg);
+
+    border:
+        1px solid #bbf7d0;
+}
+
+
+.success-box > i {
+    margin-top: 3px;
+
+    color: var(--success);
+
+    font-size: 1.3rem;
+}
+
+
+.next-phase {
+    background: #f8fafc;
+
+    border:
+        1px solid var(--border);
+}
+
+
+.next-phase > i {
+    margin-top: 3px;
+
+    color: var(--primary);
+
+    font-size: 1.3rem;
+}
+
+
+.success-box h2,
+.next-phase h2 {
+    margin-bottom: 7px;
+
+    color: var(--dark);
+
+    font-size: 1rem;
+}
+
+
+.success-box p,
+.next-phase p {
+    color: var(--text);
+
+    line-height: 1.6;
+}
+
+
+/* ================================
+   ACCESSIBILITY
+================================ */
+
+button:focus-visible,
+a:focus-visible {
+    outline:
+        3px solid
+        rgba(37, 99, 235, 0.35);
+
+    outline-offset: 3px;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 600px) {
+
+    .header-container {
+        width:
+            calc(100% - 30px);
+    }
+
+
+    .dashboard-main {
+        padding: 35px 15px;
+    }
+
+
+    .welcome-card {
+        padding:
+            35px 22px;
+    }
+
+
+    .success-box,
+    .next-phase {
+        flex-direction: column;
+    }
+
+}

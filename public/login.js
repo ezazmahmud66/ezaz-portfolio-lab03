@@ -1,37 +1,58 @@
 "use strict";
 
+
 const loginForm =
-    document.getElementById("login-form");
+    document.getElementById(
+        "login-form"
+    );
 
 const emailInput =
-    document.getElementById("email");
+    document.getElementById(
+        "email"
+    );
 
 const passwordInput =
-    document.getElementById("password");
+    document.getElementById(
+        "password"
+    );
 
 const loginButton =
-    document.getElementById("login-btn");
+    document.getElementById(
+        "login-btn"
+    );
 
 const alertMessage =
-    document.getElementById("alert-message");
+    document.getElementById(
+        "alert-message"
+    );
 
 const emailError =
-    document.getElementById("email-error");
+    document.getElementById(
+        "email-error"
+    );
 
 const passwordError =
-    document.getElementById("password-error");
+    document.getElementById(
+        "password-error"
+    );
 
 const passwordToggle =
-    document.getElementById("password-toggle");
+    document.getElementById(
+        "password-toggle"
+    );
 
 
 // ================================
 // Alert
 // ================================
 
-function showAlert(message, type) {
+function showAlert(
+    message,
+    type
+) {
 
-    alertMessage.textContent = message;
+    alertMessage.textContent =
+        message;
 
     alertMessage.className =
         `alert show ${type}`;
@@ -105,7 +126,9 @@ function validateForm() {
 
         isValid = false;
 
-    } else if (!isValidEmail(email)) {
+    } else if (
+        !isValidEmail(email)
+    ) {
 
         emailError.textContent =
             "Please enter a valid email address.";
@@ -205,6 +228,7 @@ loginForm.addEventListener(
                 );
 
                 return;
+
             }
 
 
@@ -214,12 +238,12 @@ loginForm.addEventListener(
             );
 
 
-            loginForm.reset();
+            // Session has been created.
+            // Move to protected resume page.
 
+            window.location.href =
+                "/resume";
 
-            // Phase 05:
-            // This will redirect to
-            // protected resume builder.
 
         } catch (error) {
 
@@ -233,6 +257,7 @@ loginForm.addEventListener(
                 "Unable to connect to the server. Please try again.",
                 "error"
             );
+
 
         } finally {
 
@@ -275,7 +300,8 @@ passwordToggle.addEventListener(
 
 
         const icon =
-            passwordToggle.querySelector("i");
+            passwordToggle
+                .querySelector("i");
 
 
         icon.className =

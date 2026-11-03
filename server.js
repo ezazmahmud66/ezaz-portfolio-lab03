@@ -69,6 +69,23 @@ app.get("/register", (req, res) => {
 
 
 // ================================
+// Login Page
+// ================================
+
+app.get("/login", (req, res) => {
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            "public",
+            "login.html"
+        )
+    );
+
+});
+
+
+// ================================
 // Registration API
 // ================================
 
@@ -86,10 +103,6 @@ app.post(
             } = req.body;
 
 
-            // ================================
-            // Required Fields
-            // ================================
-
             if (
                 !name ||
                 !email ||
@@ -106,8 +119,6 @@ app.post(
             }
 
 
-            // Clean values
-
             name =
                 name.trim();
 
@@ -116,10 +127,6 @@ app.post(
                     .trim()
                     .toLowerCase();
 
-
-            // ================================
-            // Name Validation
-            // ================================
 
             if (name.length < 2) {
 
@@ -131,10 +138,6 @@ app.post(
 
             }
 
-
-            // ================================
-            // Email Validation
-            // ================================
 
             const emailPattern =
                 /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -150,10 +153,6 @@ app.post(
 
             }
 
-
-            // ================================
-            // Password Validation
-            // ================================
 
             if (password.length < 6) {
 
@@ -180,10 +179,6 @@ app.post(
             }
 
 
-            // ================================
-            // Duplicate Email Check
-            // ================================
-
             const existingUser =
                 db.prepare(`
                     SELECT id
@@ -204,20 +199,12 @@ app.post(
             }
 
 
-            // ================================
-            // Hash Password
-            // ================================
-
             const hashedPassword =
                 await bcrypt.hash(
                     password,
                     12
                 );
 
-
-            // ================================
-            // Save User
-            // ================================
 
             const insertUser =
                 db.prepare(`
@@ -258,9 +245,6 @@ app.post(
             );
 
 
-            // Extra protection against
-            // database UNIQUE constraint error
-
             if (
                 error.code ===
                 "SQLITE_CONSTRAINT_UNIQUE"
@@ -279,6 +263,135 @@ app.post(
                 success: false,
                 message:
                     "Something went wrong while creating your account."
+            });
+
+        }
+
+    }
+);
+
+
+// ================================
+// Login API
+// ================================
+
+app.post(
+    "/api/login",
+    async (req, res) => {
+
+        try {
+
+            let {
+                email,
+                password
+            } = req.body;
+
+
+            // Required fields
+
+            if (
+                !email ||
+                !password
+            ) {
+
+                return res.status(400).json({
+                    success: false,
+                    message:
+                        "Email and password are required."
+                });
+
+            }
+
+
+            email =
+                email
+                    .trim()
+                    .toLowerCase();
+
+
+            // Find user by email
+
+            const user =
+                db.prepare(`
+                    SELECT
+                        id,
+                        name,
+                        email,
+                        password
+                    FROM users
+                    WHERE email = ?
+                `)
+                .get(email);
+
+
+            // Do not reveal whether
+            // email or password was wrong
+
+            if (!user) {
+
+                return res.status(401).json({
+                    success: false,
+                    message:
+                        "Incorrect email or password."
+                });
+
+            }
+
+
+            // Compare entered password
+            // with hashed password
+
+            const passwordMatches =
+                await bcrypt.compare(
+                    password,
+                    user.password
+                );
+
+
+            if (!passwordMatches) {
+
+                return res.status(401).json({
+                    success: false,
+                    message:
+                        "Incorrect email or password."
+                });
+
+            }
+
+
+            console.log(
+                `Login successful for user ID: ${user.id}`
+            );
+
+
+            return res.status(200).json({
+
+                success: true,
+
+                message:
+                    "Login successful.",
+
+                user: {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                }
+
+            });
+
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            return res.status(500).json({
+                success: false,
+                message:
+                    "Something went wrong while logging in."
             });
 
         }
@@ -425,6 +538,16 @@ app.listen(
 
         console.log(
             ` http://localhost:${PORT}/register`
+        );
+
+        console.log("");
+
+        console.log(
+            ` Login:`
+        );
+
+        console.log(
+            ` http://localhost:${PORT}/login`
         );
 
         console.log("");

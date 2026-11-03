@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Login | Ezaz Portfolio Builder
+    </title>
+
+    <meta
+        name="description"
+        content="Login to continue building and managing your professional resume.">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link
+        rel="stylesheet"
+        href="login.css">
+</head>
+
+<body>
+
+    <main class="auth-page">
+
+        <section class="auth-container">
+
+            <!-- LEFT SIDE -->
+
+            <div class="auth-info">
+
+                <a
+                    href="/"
+                    class="brand"
+                    aria-label="Go to portfolio home">
+
+                    Ezaz<span>.</span>
+
+                </a>
+
+                <div class="auth-info-content">
+
+                    <p class="eyebrow">
+                        LAB WORK 03
+                    </p>
+
+                    <h1>
+                        Welcome Back
+                    </h1>
+
+                    <p class="auth-description">
+                        Login to access your resume builder,
+                        continue your saved work, edit your information,
+                        and generate your resume.
+                    </p>
+
+                    <div class="feature-list">
+
+                        <div class="feature-item">
+
+                            <i
+                                class="fa-solid fa-right-to-bracket"
+                                aria-hidden="true"></i>
+
+                            <span>
+                                Secure account login
+                            </span>
+
+                        </div>
+
+                        <div class="feature-item">
+
+                            <i
+                                class="fa-solid fa-pen-to-square"
+                                aria-hidden="true"></i>
+
+                            <span>
+                                Continue editing your saved resume
+                            </span>
+
+                        </div>
+
+                        <div class="feature-item">
+
+                            <i
+                                class="fa-solid fa-file-pdf"
+                                aria-hidden="true"></i>
+
+                            <span>
+                                Generate and export your resume
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="auth-form-area">
+
+                <div class="auth-card">
+
+                    <div class="auth-heading">
+
+                        <p class="section-label">
+                            SIGN IN
+                        </p>
+
+                        <h2>
+                            Login to Your Account
+                        </h2>
+
+                        <p>
+                            Enter your registered email and password.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ALERT -->
+
+                    <div
+                        class="alert"
+                        id="alert-message"
+                        role="alert"
+                        aria-live="polite">
+                    </div>
+
+
+                    <!-- LOGIN FORM -->
+
+                    <form
+                        id="login-form"
+                        novalidate>
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i
+                                    class="fa-solid fa-envelope"
+                                    aria-hidden="true"></i>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="example@email.com"
+                                    autocomplete="email"
+                                    required>
+
+                            </div>
+
+                            <small
+                                class="field-error"
+                                id="email-error">
+                            </small>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="form-group">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i
+                                    class="fa-solid fa-lock"
+                                    aria-hidden="true"></i>
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Enter your password"
+                                    autocomplete="current-password"
+                                    required>
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    id="password-toggle"
+                                    aria-label="Show password">
+
+                                    <i
+                                        class="fa-solid fa-eye"
+                                        aria-hidden="true"></i>
+
+                                </button>
+
+                            </div>
+
+                            <small
+                                class="field-error"
+                                id="password-error">
+                            </small>
+
+                        </div>
+
+
+                        <!-- LOGIN BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="login-btn"
+                            id="login-btn">
+
+                            <span>
+                                Login
+                            </span>
+
+                            <i
+                                class="fa-solid fa-arrow-right-to-bracket"
+                                aria-hidden="true"></i>
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="auth-footer">
+
+                        <p>
+                            Don't have an account?
+                        </p>
+
+                        <a href="/register">
+                            Create Account
+                        </a>
+
+                    </div>
+
+
+                    <a
+                        href="/"
+                        class="back-home">
+
+                        <i
+                            class="fa-solid fa-arrow-left"
+                            aria-hidden="true"></i>
+
+                        Back to Portfolio
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="login.js"></script>
+
+</body>
+
+</html>

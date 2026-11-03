@@ -1,6 +1,9 @@
 const express = require("express");
 const path = require("path");
 
+// Initialize database
+const db = require("./database/db");
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -13,10 +16,18 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Allow HTML form data
-app.use(express.urlencoded({ extended: true }));
+app.use(
+    express.urlencoded({
+        extended: true
+    })
+);
 
-// Serve frontend files from public folder
-app.use(express.static(path.join(__dirname, "public")));
+// Serve frontend files
+app.use(
+    express.static(
+        path.join(__dirname, "public")
+    )
+);
 
 // ================================
 // Routes
@@ -25,16 +36,81 @@ app.use(express.static(path.join(__dirname, "public")));
 // Home Route
 app.get("/", (req, res) => {
     res.sendFile(
-        path.join(__dirname, "public", "index.html")
+        path.join(
+            __dirname,
+            "public",
+            "index.html"
+        )
     );
 });
 
-// Server Health Check
+// ================================
+// Health Check
+// ================================
+
 app.get("/health", (req, res) => {
     res.json({
         success: true,
-        message: "Lab 03 server is running successfully."
+        message:
+            "Lab 03 server is running successfully."
     });
+});
+
+// ================================
+// Database Test Route
+// ================================
+
+app.get("/database-test", (req, res) => {
+    try {
+
+        const usersTable = db
+            .prepare(`
+                SELECT name
+                FROM sqlite_master
+                WHERE type = 'table'
+                AND name = 'users'
+            `)
+            .get();
+
+        const resumeTable = db
+            .prepare(`
+                SELECT name
+                FROM sqlite_master
+                WHERE type = 'table'
+                AND name = 'resume_data'
+            `)
+            .get();
+
+        res.json({
+            success: true,
+
+            database:
+                "SQLite connected successfully.",
+
+            usersTable:
+                usersTable
+                    ? "users table exists"
+                    : "users table missing",
+
+            resumeTable:
+                resumeTable
+                    ? "resume_data table exists"
+                    : "resume_data table missing"
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Database test error:",
+            error
+        );
+
+        res.status(500).json({
+            success: false,
+            message:
+                "Database connection failed."
+        });
+    }
 });
 
 // ================================
@@ -53,15 +129,52 @@ app.use((req, res) => {
 // ================================
 
 app.listen(PORT, () => {
+
     console.log("");
-    console.log("======================================");
-    console.log(" Lab 03 Portfolio Server");
-    console.log("======================================");
-    console.log(` Server running at:`);
-    console.log(` http://localhost:${PORT}`);
+
+    console.log(
+        "======================================"
+    );
+
+    console.log(
+        " Lab 03 Portfolio Server"
+    );
+
+    console.log(
+        "======================================"
+    );
+
+    console.log(
+        ` Server running at:`
+    );
+
+    console.log(
+        ` http://localhost:${PORT}`
+    );
+
     console.log("");
-    console.log(` Health check:`);
-    console.log(` http://localhost:${PORT}/health`);
-    console.log("======================================");
+
+    console.log(
+        ` Health check:`
+    );
+
+    console.log(
+        ` http://localhost:${PORT}/health`
+    );
+
+    console.log("");
+
+    console.log(
+        ` Database test:`
+    );
+
+    console.log(
+        ` http://localhost:${PORT}/database-test`
+    );
+
+    console.log(
+        "======================================"
+    );
+
     console.log("");
 });

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Create Account | Ezaz Portfolio Builder
+    </title>
+
+    <meta
+        name="description"
+        content="Create an account to build and save your professional resume.">
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link
+        rel="stylesheet"
+        href="register.css">
+</head>
+
+<body>
+
+    <main class="auth-page">
+
+        <section class="auth-container">
+
+            <!-- LEFT SIDE -->
+
+            <div class="auth-info">
+
+                <a
+                    href="/"
+                    class="brand"
+                    aria-label="Go to portfolio home">
+
+                    Ezaz<span>.</span>
+
+                </a>
+
+                <div class="auth-info-content">
+
+                    <p class="eyebrow">
+                        LAB WORK 03
+                    </p>
+
+                    <h1>
+                        Build Your Professional Resume
+                    </h1>
+
+                    <p class="auth-description">
+                        Create an account to access the resume builder,
+                        save your progress, edit your information later,
+                        and generate your resume.
+                    </p>
+
+                    <div class="feature-list">
+
+                        <div class="feature-item">
+
+                            <i
+                                class="fa-solid fa-user-shield"
+                                aria-hidden="true"></i>
+
+                            <span>
+                                Secure account authentication
+                            </span>
+
+                        </div>
+
+                        <div class="feature-item">
+
+                            <i
+                                class="fa-solid fa-floppy-disk"
+                                aria-hidden="true"></i>
+
+                            <span>
+                                Save and continue your resume later
+                            </span>
+
+                        </div>
+
+                        <div class="feature-item">
+
+                            <i
+                                class="fa-solid fa-file-pdf"
+                                aria-hidden="true"></i>
+
+                            <span>
+                                Generate a professional PDF resume
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="auth-form-area">
+
+                <div class="auth-card">
+
+                    <div class="auth-heading">
+
+                        <p class="section-label">
+                            GET STARTED
+                        </p>
+
+                        <h2>
+                            Create Your Account
+                        </h2>
+
+                        <p>
+                            Enter your information below to register.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ALERT -->
+
+                    <div
+                        class="alert"
+                        id="alert-message"
+                        role="alert"
+                        aria-live="polite">
+                    </div>
+
+
+                    <!-- REGISTER FORM -->
+
+                    <form
+                        id="register-form"
+                        novalidate>
+
+                        <!-- NAME -->
+
+                        <div class="form-group">
+
+                            <label for="name">
+                                Full Name
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i
+                                    class="fa-solid fa-user"
+                                    aria-hidden="true"></i>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Enter your full name"
+                                    autocomplete="name"
+                                    required>
+
+                            </div>
+
+                            <small
+                                class="field-error"
+                                id="name-error">
+                            </small>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i
+                                    class="fa-solid fa-envelope"
+                                    aria-hidden="true"></i>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="example@email.com"
+                                    autocomplete="email"
+                                    required>
+
+                            </div>
+
+                            <small
+                                class="field-error"
+                                id="email-error">
+                            </small>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="form-group">
+
+                            <label for="password">
+                                Password
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i
+                                    class="fa-solid fa-lock"
+                                    aria-hidden="true"></i>
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    placeholder="Minimum 6 characters"
+                                    autocomplete="new-password"
+                                    required>
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="password"
+                                    aria-label="Show password">
+
+                                    <i
+                                        class="fa-solid fa-eye"
+                                        aria-hidden="true"></i>
+
+                                </button>
+
+                            </div>
+
+                            <small
+                                class="field-error"
+                                id="password-error">
+                            </small>
+
+                        </div>
+
+
+                        <!-- CONFIRM PASSWORD -->
+
+                        <div class="form-group">
+
+                            <label for="confirm-password">
+                                Confirm Password
+                            </label>
+
+                            <div class="input-wrapper">
+
+                                <i
+                                    class="fa-solid fa-lock"
+                                    aria-hidden="true"></i>
+
+                                <input
+                                    type="password"
+                                    id="confirm-password"
+                                    name="confirmPassword"
+                                    placeholder="Enter password again"
+                                    autocomplete="new-password"
+                                    required>
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    data-target="confirm-password"
+                                    aria-label="Show confirm password">
+
+                                    <i
+                                        class="fa-solid fa-eye"
+                                        aria-hidden="true"></i>
+
+                                </button>
+
+                            </div>
+
+                            <small
+                                class="field-error"
+                                id="confirm-password-error">
+                            </small>
+
+                        </div>
+
+
+                        <!-- SUBMIT BUTTON -->
+
+                        <button
+                            type="submit"
+                            class="register-btn"
+                            id="register-btn">
+
+                            <span>
+                                Create Account
+                            </span>
+
+                            <i
+                                class="fa-solid fa-arrow-right"
+                                aria-hidden="true"></i>
+
+                        </button>
+
+                    </form>
+
+
+                    <div class="auth-footer">
+
+                        <p>
+                            Already registered?
+                        </p>
+
+                        <span>
+                            Login will be added in Phase 04.
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="/"
+                        class="back-home">
+
+                        <i
+                            class="fa-solid fa-arrow-left"
+                            aria-hidden="true"></i>
+
+                        Back to Portfolio
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="register.js"></script>
+
+</body>
+
+</html>
